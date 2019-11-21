@@ -2,7 +2,7 @@
 using log4net.Config;
 using log4net.Repository.Hierarchy;
 
-namespace KursovaSP
+namespace KursovaAK
 {
     public static class Logger
     {

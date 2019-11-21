@@ -13,10 +13,14 @@ using System.Diagnostics;
 using System.Configuration;
 using System.Globalization;
 
-namespace KursovaSP
+namespace KursovaAK
 {
     public partial class MainForm : Form
     {
+        private bool ifSave;
+        private string currFile;
+        private string currWay;
+        private string currName;
         public MainForm()
         {
             InitializeComponent();
@@ -126,10 +130,8 @@ namespace KursovaSP
         {
             ReportText.Clear();
             ErrorText.Clear();
-            Datas.Clear();
             try
             {
-                way = Application.StartupPath;
                 if (string.IsNullOrEmpty(currFile))
                 {
                     MessageBox.Show("Save file before compiling");
@@ -141,139 +143,52 @@ namespace KursovaSP
                 }
                 tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ReportTab");
                 // Отримання і формування мен ввхідних та вихідних файлів
-                inFileName = currFile;
-                outFileName = currWay + "\\" + currName + ".asm";
+                //inFileName = currFile;
+                //outFileName = currWay + "\\" + currName + ".asm";
                 ReportText.AppendText("Compiling the project begins...\r\n");
                 ReportText.AppendText("Input file of the project " + currName + ".l69.\r\n");
-                using (fin = new StreamReader(inFileName))
-                {
-                    // Розбиття на лексеми і друк у файл
-                    AnalisisTokens(fin);
-                }
-                ReportText.AppendText("Begins search for tokens...\r\n");
-                ReportText.AppendText("Find " + TokensTable.Count + " tokens.\r\n");
-                PrintTokensInFile();
-                TokensGrid.DataSource = Datas;
-                nNumberErrors = ErrorChecking();
+                //using (fin = new StreamReader(inFileName))
+                //{
+                //    // Розбиття на лексеми і друк у файл
+                //    AnalisisTokens(fin);
+                //}
+                //nNumberErrors = ErrorChecking();
                 ReportText.AppendText("Begins search for errors...\r\n");
                 ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
                 // Якшо немає помилок, перейти до трансляції коду
-                if (nNumberErrors != 0)
-                {
-                    ReportText.AppendText("Find " + nNumberErrors + " errors.\r\n");
-                }
-                else
+                //if (nNumberErrors != 0)
+                //{
+                //    ReportText.AppendText("Find " + nNumberErrors + " errors.\r\n");
+                //}
+                //else
                 {
                     ReportText.AppendText("No errors found.\r\n");
-                    using (fout = new StreamWriter(outFileName))
-                    {
-                        ReportText.AppendText("ASM file " + currName + ".asm successfully created.\r\n");
-                        Generator.GenerateCode(fout);
-                    }
-                    string obj, exe, asmf, cop, tmp;
-                    obj = currName + ".obj";
-                    exe = currName + ".exe";
-                    asmf = currName + ".asm";
-                    cop = way + "\\" + asmf;
-                    ReportText.AppendText("Compiling the " + asmf + " with tasm32.exe ...\r\n");
-                    if (File.Exists(cop))
-                    {
-                        File.Delete(cop);
-                    }
-                    File.Copy(outFileName, cop);
-                    ReportText.AppendText("Linking the " + obj + " with tlink32.exe ...\r\n");
-                    if (RunCmd(asmf) == 0)
-                    {
-                        tmp = currWay + "\\" + currName + ".map";
-                        cop = way + "\\" + currName + ".map";
-                        File.Copy(cop, tmp, false);
-                        tmp = currWay + "\\" + obj;
-                        cop = way + "\\" + obj;
-                        File.Copy(cop, tmp, false);
-                        tmp = currWay + "\\" + exe;
-                        cop = way + "\\" + exe;
-                        Thread.Sleep(200);
-                        File.Copy(cop, tmp, false);
-                        ReportText.AppendText("Compiling the project completed.\r\n");
-                        ReportText.AppendText("Now you can start the program to perform.\r\n");
-                    }
-                    else
-                    {
-                        ReportText.AppendText("Something happened! See error tab.\r\n");
-                    }
+                    //using (fout = new StreamWriter(outFileName))
+                    //{
+                    //    ReportText.AppendText("ASM file " + currName + ".asm successfully created.\r\n");
+                    //    Generator.GenerateCode(fout);
+                    //}
+                    ReportText.AppendText("Compiling the project completed.\r\n");
+                    ReportText.AppendText("Now you can start the program to perform.\r\n");
                     RunToolStripMenuItem.Enabled = true;
                 }
             }
             catch (Exception ex)
             {
                 Logger.Log.Error(ex.Message + " " + ex.StackTrace);
+                MessageBox.Show("Ой...щось пішло не так, глянь Error.log", "НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private int RunCmd(string asmf)
-        {
-            FileStream f = null;
-            try
-            {
-                f = File.Create("run.cmd");
-                using (var batFile = new StreamWriter(f))
-                {
-                    f = null;
-                    batFile.Write("@echo off\n");
-                    batFile.Write($"@ml /c /coff {asmf}\n");
-                    batFile.Write($"@link /subsystem:console {asmf}\n");
-                }
-            }
-            finally
-            {
-                f?.Dispose();
-            }
-            var processInfo = new ProcessStartInfo("run.cmd")
-            {
-                StandardErrorEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
-                StandardOutputEncoding = Encoding.GetEncoding(CultureInfo.CurrentCulture.TextInfo.OEMCodePage),
-                CreateNoWindow = true,
-                UseShellExecute = false,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true
-            };
-
-            var process = Process.Start(processInfo);
-
-            var output = new Action<string>(s =>
-            {
-                ReportText.AppendText(s);
-            });
-            var errorOut = new Action<string>(s =>
-            {
-                ErrorText.AppendText(s);
-            });
-
-            process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-                ReportText.BeginInvoke(output, e.Data + "\r\n");
-            process.BeginOutputReadLine();
-
-            process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
-                ErrorText.BeginInvoke(errorOut, e.Data + "\r\n");
-            process.BeginErrorReadLine();
-
-            process.WaitForExit();
-
-            int ret = process.ExitCode;
-            process.Close();
-            return ret;
         }
 
         private void RunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                var exe = currWay + "\\" + currName + ".exe";
-                Process.Start(exe);
             }
             catch (Exception ex)
             {
                 Logger.Log.Error(ex.Message + " " + ex.StackTrace);
+                MessageBox.Show("Ой...щось пішло не так, глянь Error.log","НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -282,15 +197,5 @@ namespace KursovaSP
             ifSave = false;
         }
 
-        private void TokensGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            if (sender is DataGridView gridView)
-            {
-                foreach (DataGridViewRow r in gridView.Rows)
-                {
-                    gridView.Rows[r.Index].HeaderCell.Value = (r.Index + 1).ToString();
-                }
-            }
-        }
     }
 }

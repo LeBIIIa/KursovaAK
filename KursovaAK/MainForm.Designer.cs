@@ -1,4 +1,4 @@
-﻿namespace KursovaSP
+﻿namespace KursovaAK
 {
     partial class MainForm
     {
@@ -35,8 +35,6 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.ReportTab = new System.Windows.Forms.TabPage();
             this.ReportText = new System.Windows.Forms.TextBox();
-            this.TokensTab = new System.Windows.Forms.TabPage();
-            this.TokensGrid = new System.Windows.Forms.DataGridView();
             this.ErrorTab = new System.Windows.Forms.TabPage();
             this.ErrorText = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -49,12 +47,13 @@
             this.проектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CompileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.опціїToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCompiledFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openReportProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.ReportTab.SuspendLayout();
-            this.TokensTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TokensGrid)).BeginInit();
             this.ErrorTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +114,6 @@
             // tabControl
             // 
             this.tabControl.Controls.Add(this.ReportTab);
-            this.tabControl.Controls.Add(this.TokensTab);
             this.tabControl.Controls.Add(this.ErrorTab);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(4, 443);
@@ -149,40 +147,6 @@
             this.ReportText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.ReportText.Size = new System.Drawing.Size(1176, 136);
             this.ReportText.TabIndex = 0;
-            // 
-            // TokensTab
-            // 
-            this.TokensTab.Controls.Add(this.TokensGrid);
-            this.TokensTab.Location = new System.Drawing.Point(4, 29);
-            this.TokensTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.TokensTab.Name = "TokensTab";
-            this.TokensTab.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.TokensTab.Size = new System.Drawing.Size(1184, 146);
-            this.TokensTab.TabIndex = 1;
-            this.TokensTab.Text = "Список лексем";
-            this.TokensTab.UseVisualStyleBackColor = true;
-            // 
-            // TokensGrid
-            // 
-            this.TokensGrid.AllowUserToAddRows = false;
-            this.TokensGrid.AllowUserToDeleteRows = false;
-            this.TokensGrid.AllowUserToResizeColumns = false;
-            this.TokensGrid.AllowUserToResizeRows = false;
-            this.TokensGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.TokensGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.TokensGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TokensGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TokensGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.TokensGrid.Location = new System.Drawing.Point(4, 5);
-            this.TokensGrid.MultiSelect = false;
-            this.TokensGrid.Name = "TokensGrid";
-            this.TokensGrid.ReadOnly = true;
-            this.TokensGrid.RowHeadersWidth = 62;
-            this.TokensGrid.RowTemplate.Height = 28;
-            this.TokensGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.TokensGrid.Size = new System.Drawing.Size(1176, 136);
-            this.TokensGrid.TabIndex = 1;
-            this.TokensGrid.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TokensGrid_DataBindingComplete);
             // 
             // ErrorTab
             // 
@@ -231,7 +195,8 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.проектToolStripMenuItem});
+            this.проектToolStripMenuItem,
+            this.опціїToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
@@ -296,6 +261,33 @@
             this.RunToolStripMenuItem.Text = "Запустити програму";
             this.RunToolStripMenuItem.Click += new System.EventHandler(this.RunToolStripMenuItem_Click);
             // 
+            // опціїToolStripMenuItem
+            // 
+            this.опціїToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openCompiledFileToolStripMenuItem,
+            this.openReportProgramToolStripMenuItem});
+            this.опціїToolStripMenuItem.Name = "опціїToolStripMenuItem";
+            this.опціїToolStripMenuItem.Size = new System.Drawing.Size(71, 29);
+            this.опціїToolStripMenuItem.Text = "Опції";
+            // 
+            // openCompiledFileToolStripMenuItem
+            // 
+            this.openCompiledFileToolStripMenuItem.Checked = true;
+            this.openCompiledFileToolStripMenuItem.CheckOnClick = true;
+            this.openCompiledFileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.openCompiledFileToolStripMenuItem.Name = "openCompiledFileToolStripMenuItem";
+            this.openCompiledFileToolStripMenuItem.Size = new System.Drawing.Size(387, 34);
+            this.openCompiledFileToolStripMenuItem.Text = "Відкривати скомпільований файл";
+            // 
+            // openReportProgramToolStripMenuItem
+            // 
+            this.openReportProgramToolStripMenuItem.Checked = true;
+            this.openReportProgramToolStripMenuItem.CheckOnClick = true;
+            this.openReportProgramToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.openReportProgramToolStripMenuItem.Name = "openReportProgramToolStripMenuItem";
+            this.openReportProgramToolStripMenuItem.Size = new System.Drawing.Size(387, 34);
+            this.openReportProgramToolStripMenuItem.Text = "Відкривати файл програми";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -314,8 +306,6 @@
             this.tabControl.ResumeLayout(false);
             this.ReportTab.ResumeLayout(false);
             this.ReportTab.PerformLayout();
-            this.TokensTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.TokensGrid)).EndInit();
             this.ErrorTab.ResumeLayout(false);
             this.ErrorTab.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -330,7 +320,6 @@
         private System.Windows.Forms.RichTextBox Code;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage ReportTab;
-        private System.Windows.Forms.TabPage TokensTab;
         private System.Windows.Forms.TabPage ErrorTab;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
@@ -346,7 +335,9 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TextBox ReportText;
         private System.Windows.Forms.TextBox ErrorText;
-        private System.Windows.Forms.DataGridView TokensGrid;
+        private System.Windows.Forms.ToolStripMenuItem опціїToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openCompiledFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openReportProgramToolStripMenuItem;
     }
 }
 
