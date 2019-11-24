@@ -63,16 +63,17 @@
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 660);
+            this.statusStrip.Location = new System.Drawing.Point(0, 663);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1200, 32);
+            this.statusStrip.Size = new System.Drawing.Size(1200, 29);
             this.statusStrip.TabIndex = 0;
             // 
             // StatusLabel
             // 
+            this.StatusLabel.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(1177, 25);
+            this.StatusLabel.Size = new System.Drawing.Size(1177, 22);
             this.StatusLabel.Spring = true;
             this.StatusLabel.Text = "toolStripStatusLabel1";
             this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -90,7 +91,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 627);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 630);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // Code
@@ -103,12 +104,12 @@
             this.Code.Location = new System.Drawing.Point(4, 5);
             this.Code.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Code.Name = "Code";
-            this.Code.Size = new System.Drawing.Size(592, 617);
+            this.Code.Size = new System.Drawing.Size(592, 620);
             this.Code.TabIndex = 0;
             this.Code.Text = "";
             this.Code.TextChanged += new System.EventHandler(this.Code_TextChanged);
-            this.Code.KeyUp += new System.Windows.Forms.KeyEventHandler(this.richTextBox_KeyUp);
-            this.Code.MouseDown += new System.Windows.Forms.MouseEventHandler(this.richTextBox_MouseDown);
+            this.Code.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RichTextBox_KeyUp);
+            this.Code.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RichTextBox_MouseDown);
             // 
             // tabControl
             // 
@@ -120,7 +121,7 @@
             this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(592, 617);
+            this.tabControl.Size = new System.Drawing.Size(592, 620);
             this.tabControl.TabIndex = 1;
             // 
             // ReportTab
@@ -155,7 +156,7 @@
             this.ErrorTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ErrorTab.Name = "ErrorTab";
             this.ErrorTab.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ErrorTab.Size = new System.Drawing.Size(584, 584);
+            this.ErrorTab.Size = new System.Drawing.Size(584, 587);
             this.ErrorTab.TabIndex = 2;
             this.ErrorTab.Text = "Список помилок";
             this.ErrorTab.UseVisualStyleBackColor = true;
@@ -170,7 +171,7 @@
             this.ErrorText.Name = "ErrorText";
             this.ErrorText.ReadOnly = true;
             this.ErrorText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ErrorText.Size = new System.Drawing.Size(576, 574);
+            this.ErrorText.Size = new System.Drawing.Size(576, 577);
             this.ErrorText.TabIndex = 0;
             // 
             // OutputTab
@@ -215,7 +216,6 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
@@ -242,7 +242,7 @@
             this.openFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.openFileToolStripMenuItem.Size = new System.Drawing.Size(382, 34);
             this.openFileToolStripMenuItem.Text = "Відкрити файл програми";
-            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.OpenFileToolStripMenuItem_Click);
             // 
             // SaveToolStripMenuItem
             // 
@@ -295,7 +295,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
-            this.Text = "Compilator s77";
+            this.Text = "Kursova AK";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);

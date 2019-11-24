@@ -34,7 +34,7 @@ namespace Assembler
                     /* check for illegal opcode */
                     if ( CommonUtil.Commands.All(c => opcode != c.Value))
                     {
-                        throw new MessageException($"Unrecognized opcode {opcode} at address {address}");
+                        throw new MessageException($"Unrecognized opcode {opcode} at address {address + 1}");
                     }
 
                     isNoReg = CheckCommands(opcode, new[] { Command.XOR, Command.AND, Command.IMUL }) && string.IsNullOrEmpty(arg0);
@@ -79,11 +79,12 @@ namespace Assembler
 
 
                     /* check for enough arguments */
-                    if (!isNoReg && (!CheckCommands(opcode, new[] { Command.HALT, Command.FILL, Command.JALR, Command.PUSH, Command.POP, Command.BSR, Command.BSF}) && string.IsNullOrEmpty(arg2)) ||
+                    if (!isNoReg && 
+                         (!CheckCommands(opcode, new[] { Command.HALT, Command.FILL, Command.JALR, Command.PUSH, Command.POP, Command.BSR, Command.BSF}) && string.IsNullOrEmpty(arg2)) ||
                          (CheckCommands(opcode, new[] { Command.BSF, Command.BSR }) && string.IsNullOrEmpty(arg1) ) ||
-                         ( CheckCommands(opcode, new[] { Command.FILL, Command.PUSH, Command.POP, Command.JNE }) && string.IsNullOrEmpty(arg0) ) )
+                         (CheckCommands(opcode, new[] { Command.FILL, Command.PUSH, Command.POP, Command.JNE }) && string.IsNullOrEmpty(arg0) ) )
                     {
-                        throw new MessageException($"Error at address {address}: not enough arguments");
+                        throw new MessageException($"Error at address {address + 1}: not enough arguments");
                     }
 
                     if ( !string.IsNullOrEmpty(label) )
@@ -95,7 +96,7 @@ namespace Assembler
                         }
 
                         /* make sure label starts with letter */
-                        if (!Regex.IsMatch(label, "[a-zA-Z]"))
+                        if (!Regex.IsMatch(label, "^[a-zA-Z]"))
                         {
                             throw new MessageException($"Label {label} doesn't start with letter!");
                         }
@@ -107,10 +108,10 @@ namespace Assembler
                         }
 
                         /* look for duplicate label */
-                        if (labelArray.Exists(l => l.label == (label)))
+                        var duplicate = labelArray.FirstOrDefault(l => l.label == label);
+                        if (duplicate != null)
                         {
-                            var index = labelArray.First(l => l.label == (label)).Address;
-                            throw new MessageException($"Error: duplicate label {label} at address {index}");
+                            throw new MessageException($"Error: duplicate label {label} at address {duplicate.Address + 1}");
                         }
                         labelArray.Add(new Label { label = label, Address = address });
                     }
@@ -128,7 +129,7 @@ namespace Assembler
 
                     int num = 0;
                     if (CheckCommands(opcode, new[] { Command.ADD, Command.NAND, Command.MUL,  Command.DIV, 
-                                                    Command.XIDIV, Command.AND, Command.CMPGE, Command.XOR, Command.AND, Command.IMUL}))
+                                                    Command.XIDIV, Command.AND, Command.CMPGE, Command.XOR, Command.IMUL}))
                     {
                         num = !isNoReg ? CreateNumber(opCommand, arg0, arg1, arg2) : CreateNumber(opCommand);
                     }
@@ -183,7 +184,7 @@ namespace Assembler
 
                         if (addressField < CommonUtil.MINADDRESSFIELD || addressField > CommonUtil.MAXADDRESSFIELD)
                         {
-                            throw new MessageException($"Error: offset {addressField} out of range");
+                            throw new MessageException($"Error: offset {addressField + 1} out of range");
                         }
 
                         addressField &= CommonUtil.MaskForAddr;
@@ -245,7 +246,7 @@ namespace Assembler
             /* search through address label table */
             var label = labelArray.FirstOrDefault(l => l.label == (symbol));
 
-            if (label.Equals(default(Label)))
+            if (label == null)
             {
                 throw new MessageException($"Error: missing label {symbol}");
             }

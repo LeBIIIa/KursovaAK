@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Assembler
 {
-    internal struct Label
+    internal class Label
     {
         public int Address;
         public string label;
@@ -27,7 +27,6 @@ namespace Assembler
             mem = Enumerable.Repeat(0, CommonUtil.NUMMEMORY).ToList();
             reg = Enumerable.Repeat(0, CommonUtil.COUNTREGISTERS).ToList();
             stack = new Stack<int>(CommonUtil.MAXSTACKSIZE);
-            
         }
     }
 
@@ -47,8 +46,8 @@ namespace Assembler
         public const int MAXNUMLABELS = 65536;
         public const int MAXLABELLENGTH = 7;
         public const int COUNTREGISTERS = 16;
-        public const int NUMMEMORY = 16384;
-        public const int startMemCommand = 256;
+        public const int NUMMEMORY = 65536;
+        public const int startMemCommand = 31;
         public const int MAXSTACKSIZE = 32;
         public static Dictionary<Command, string> Commands { get { if (_command == null) { Init(); } return _command; } }
         #endregion
@@ -72,10 +71,11 @@ namespace Assembler
         }
     }
 
+    [Flags]
     public enum Command
     {
-        ADD,
-        NAND,
+        ADD, 
+        NAND, 
         LW,
         SW,
         BEQ,
@@ -95,7 +95,6 @@ namespace Assembler
         BSR,
         BSF,
         JNE,
-
         FILL = CommonUtil.startMemCommand
     }
 }

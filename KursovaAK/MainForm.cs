@@ -48,17 +48,17 @@ namespace KursovaAK
             statusStrip.Items[0].Text = $"Ряд: { line + 1 } Сто: {column + 1}";
         }
 
-        private void richTextBox_KeyUp(object sender, KeyEventArgs e)
+        private void RichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             GetPosition();
         }
 
-        private void richTextBox_MouseDown(object sender, MouseEventArgs e)
+        private void RichTextBox_MouseDown(object sender, MouseEventArgs e)
         {
             GetPosition();
         }
 
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace KursovaAK
                 File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), string.Empty);
                 if (string.IsNullOrEmpty(currFile))
                 {
-                    MessageBox.Show("Save file before compiling");
+                    MessageBox.Show("Збережіть файл перед тим як компілювати");
                     return;
                 }
                 if (!ifSave)
@@ -147,9 +147,9 @@ namespace KursovaAK
                 // Отримання і формування мен ввхідних та вихідних файлів
                 var inFileName = currFile;
                 var outFileName = currWay + "\\" + currName + ".mc";
-                ReportText.AppendText("Compiling the project begins...\r\n");
-                ReportText.AppendText("Input file of the project " + currName + ".as.\r\n");
-                ReportText.AppendText("Begins search for errors...\r\n");
+                ReportText.AppendText("Компілювання проекту почалось...\r\n");
+                ReportText.AppendText("Вхідний файл проекту " + currName + ".as.\r\n");
+                ReportText.AppendText("Пошук помилок...\r\n");
                 bool isError = false;
                 try
                 {
@@ -164,23 +164,23 @@ namespace KursovaAK
                 ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
                 if (!isError)
                 {
-                    ReportText.AppendText("No errors found.\r\n");
-                    ReportText.AppendText("Compiling the project completed.\r\n");
-                    ReportText.AppendText("Now you can start the program to perform.\r\n");
+                    ReportText.AppendText("Помилок не знайдено.\r\n");
+                    ReportText.AppendText("Компілювання завершено.\r\n");
+                    ReportText.AppendText("Тепер можете запустити проект.\r\n");
                     RunToolStripMenuItem.Enabled = true;
                 }
                 else
                 {
                     tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
-                    ReportText.AppendText("See error tab.\r\n");
+                    ReportText.AppendText("Упс.. знайшлись помилки.\r\n");
                 }
             }
             catch (Exception ex)
             {
                 Logger.Log.Error(ex.Message + " " + ex.StackTrace);
                 tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
-                ErrorText.AppendText("See Error.log");
-                MessageBox.Show("Ой...щось пішло не так, глянь Error.log", "НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorText.AppendText("Упс.. щось сталось, гляньте Error.log");
+                MessageBox.Show("Ой...щось пішло не так, гляньте Error.log", "НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -194,7 +194,7 @@ namespace KursovaAK
                 File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), string.Empty);
                 if (string.IsNullOrEmpty(currFile))
                 {
-                    MessageBox.Show("Save file before compiling");
+                    MessageBox.Show("Збережіть файл перед тим як компілювати");
                     return;
                 }
                 if (!ifSave)
@@ -204,33 +204,41 @@ namespace KursovaAK
                 tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ReportTab");
                 // Отримання і формування мен ввхідних та вихідних файлів
                 var inFileName = Path.ChangeExtension(currFile, ".mc");
-                var outFileName = currWay + "\\" + currName + ".mc_report";
-                ReportText.AppendText("Running the project begins...\r\n");
-                ReportText.AppendText("Input file of the project " + currName + ".mc.\r\n");
-                ReportText.AppendText("Begins search for errors...\r\n");
-                bool isError = false;
-                try
+                if (!File.Exists(inFileName))
                 {
-                    sol = new SSol();
-                    sol.Run(inFileName, outFileName);
-                }
-                catch (MessageException ex)
-                {
-                    isError = true;
-                    File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), ex.Message);
-                }
-                ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
-                if (!isError)
-                {
-                    tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("OutputTab");
-                    OutputText.AppendText(File.ReadAllText(outFileName));
-                    ReportText.AppendText("No errors found.\r\n");
-                    ReportText.AppendText("Finish running.");
+                    ReportText.AppendText($"Файл за шляхом: {inFileName} не знайдено!\r\n");
+                    ReportText.AppendText($"Скомпілюйте проект ще раз!\r\n");
                 }
                 else
                 {
-                    tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
-                    ReportText.AppendText("See error tab.\r\n");
+                    var outFileName = currWay + "\\" + currName + ".mc_report";
+                    ReportText.AppendText("Запуск проекту почався...\r\n");
+                    ReportText.AppendText("Вхідний файл " + currName + ".mc.\r\n");
+                    ReportText.AppendText("Пошук помилок...\r\n");
+                    bool isError = false;
+                    try
+                    {
+                        sol = new SSol();
+                        sol.Run(inFileName, outFileName);
+                    }
+                    catch (MessageException ex)
+                    {
+                        isError = true;
+                        File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), ex.Message);
+                    }
+                    ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
+                    if (!isError)
+                    {
+                        tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("OutputTab");
+                        OutputText.AppendText(File.ReadAllText(outFileName));
+                        ReportText.AppendText("Помилок не знайдено.\r\n");
+                        ReportText.AppendText("Кінець.");
+                    }
+                    else
+                    {
+                        tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
+                        ReportText.AppendText("Упс.. знайшлись помилки.\r\n");
+                    }
                 }
             }
             catch (Exception ex)

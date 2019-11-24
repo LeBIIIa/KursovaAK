@@ -31,9 +31,9 @@ namespace Assembler
                     }
                     else
                     {
-                        throw new MessageException($"error in reading address {state.numMemory}");
+                        throw new MessageException($"error in reading address {state.numMemory + 1}");
                     }
-                    sw.WriteLine("memory[{0}]={1}", state.numMemory, state.mem[state.numMemory]);
+                    sw.WriteLine("memory[ {0} ]={1}", state.numMemory, state.mem[state.numMemory]);
                 }
                 /* run never returns */
                 Start(state);
@@ -120,7 +120,7 @@ namespace Assembler
                     {
                         if (state.reg[arg1] == 0)
                         {
-                            throw new MessageException($"Divide by zero({state.numMemory})");
+                            throw new MessageException($"Divide by zero({state.numMemory + 1})");
                         }
 
                         state.reg[arg2] = Math.Abs(state.reg[arg0]) / Math.Abs(state.reg[arg1]);
@@ -152,7 +152,7 @@ namespace Assembler
                     {
                         if (state.reg[arg1] == 0)
                         {
-                            throw new MessageException($"Divide by zero({state.numMemory})");
+                            throw new MessageException($"Divide by zero({state.numMemory + 1})");
                         }
 
                         state.reg[arg2] = Math.Abs(state.reg[arg0]) / Math.Abs(state.reg[arg1]);
@@ -218,9 +218,9 @@ namespace Assembler
                     }
                     else if (opcode == Command.HALT)
                     {
-                        sw.WriteLine("machine halted\n");
-                        sw.WriteLine($"total of {instructions + 1} instructions executed\n");
-                        sw.WriteLine("final state of machine:\n");
+                        sw.WriteLine("machine halted");
+                        sw.WriteLine($"total of {instructions + 1} instructions executed");
+                        sw.WriteLine("final state of machine:");
                         PrintState(state, sw);
                         isHalt = true;
                     }
@@ -312,19 +312,19 @@ namespace Assembler
             sw.WriteLine("\tmemory:");
             for (var i = 0; i < state.numMemory; i++)
             {
-                sw.WriteLine($"\t\tmem[ {i} ] {state.mem[i]}");
+                sw.WriteLine($"\t\tmem[ {i} ] = {state.mem[i]}");
             }
             sw.WriteLine("\tregisters:");
             for (var i = 0; i < CommonUtil.COUNTREGISTERS; i++)
             {
-                sw.WriteLine($"\t\treg[ {i} ] {state.reg[i]}");
+                sw.WriteLine($"\t\treg[ {i} ] = {state.reg[i]}");
             }
-            sw.WriteLine($"\t\tStack Top: {state.stack.Count}");
+            sw.WriteLine($"\tStack Top: {state.stack.Count}");
             sw.WriteLine("\tStack:");
             var lst = state.stack.ToArray();
             for (var i = 0;i<state.stack.Count;++i)
             {
-                sw.WriteLine($"\t\tstack[ {i} ] {lst[i]}");
+                sw.WriteLine($"\t\tstack[ {i} ] = {lst[i]}");
             }
             sw.WriteLine("\tFlag:");
             sw.WriteLine($"\t\tZF {state.ZF}");
