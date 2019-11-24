@@ -37,6 +37,8 @@
             this.ReportText = new System.Windows.Forms.TextBox();
             this.ErrorTab = new System.Windows.Forms.TabPage();
             this.ErrorText = new System.Windows.Forms.TextBox();
+            this.OutputTab = new System.Windows.Forms.TabPage();
+            this.OutputText = new System.Windows.Forms.TextBox();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -47,14 +49,12 @@
             this.проектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CompileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.опціїToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openCompiledFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openReportProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.ReportTab.SuspendLayout();
             this.ErrorTab.SuspendLayout();
+            this.OutputTab.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,18 +79,17 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.Code, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tabControl, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 33);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 627);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
@@ -104,7 +103,7 @@
             this.Code.Location = new System.Drawing.Point(4, 5);
             this.Code.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Code.Name = "Code";
-            this.Code.Size = new System.Drawing.Size(1192, 428);
+            this.Code.Size = new System.Drawing.Size(592, 617);
             this.Code.TabIndex = 0;
             this.Code.Text = "";
             this.Code.TextChanged += new System.EventHandler(this.Code_TextChanged);
@@ -115,12 +114,13 @@
             // 
             this.tabControl.Controls.Add(this.ReportTab);
             this.tabControl.Controls.Add(this.ErrorTab);
+            this.tabControl.Controls.Add(this.OutputTab);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(4, 443);
+            this.tabControl.Location = new System.Drawing.Point(604, 5);
             this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1192, 179);
+            this.tabControl.Size = new System.Drawing.Size(592, 617);
             this.tabControl.TabIndex = 1;
             // 
             // ReportTab
@@ -130,7 +130,7 @@
             this.ReportTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ReportTab.Name = "ReportTab";
             this.ReportTab.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ReportTab.Size = new System.Drawing.Size(1184, 146);
+            this.ReportTab.Size = new System.Drawing.Size(584, 584);
             this.ReportTab.TabIndex = 0;
             this.ReportTab.Text = "Звіт по проекту";
             this.ReportTab.UseVisualStyleBackColor = true;
@@ -145,7 +145,7 @@
             this.ReportText.Name = "ReportText";
             this.ReportText.ReadOnly = true;
             this.ReportText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ReportText.Size = new System.Drawing.Size(1176, 136);
+            this.ReportText.Size = new System.Drawing.Size(576, 574);
             this.ReportText.TabIndex = 0;
             // 
             // ErrorTab
@@ -155,7 +155,7 @@
             this.ErrorTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ErrorTab.Name = "ErrorTab";
             this.ErrorTab.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ErrorTab.Size = new System.Drawing.Size(1184, 146);
+            this.ErrorTab.Size = new System.Drawing.Size(584, 584);
             this.ErrorTab.TabIndex = 2;
             this.ErrorTab.Text = "Список помилок";
             this.ErrorTab.UseVisualStyleBackColor = true;
@@ -170,22 +170,46 @@
             this.ErrorText.Name = "ErrorText";
             this.ErrorText.ReadOnly = true;
             this.ErrorText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ErrorText.Size = new System.Drawing.Size(1176, 136);
+            this.ErrorText.Size = new System.Drawing.Size(576, 574);
             this.ErrorText.TabIndex = 0;
+            // 
+            // OutputTab
+            // 
+            this.OutputTab.Controls.Add(this.OutputText);
+            this.OutputTab.Location = new System.Drawing.Point(4, 29);
+            this.OutputTab.Name = "OutputTab";
+            this.OutputTab.Padding = new System.Windows.Forms.Padding(3);
+            this.OutputTab.Size = new System.Drawing.Size(584, 584);
+            this.OutputTab.TabIndex = 3;
+            this.OutputTab.Text = "Вивід";
+            this.OutputTab.UseVisualStyleBackColor = true;
+            // 
+            // OutputText
+            // 
+            this.OutputText.AcceptsReturn = true;
+            this.OutputText.AcceptsTab = true;
+            this.OutputText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OutputText.Location = new System.Drawing.Point(3, 3);
+            this.OutputText.Multiline = true;
+            this.OutputText.Name = "OutputText";
+            this.OutputText.ReadOnly = true;
+            this.OutputText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.OutputText.Size = new System.Drawing.Size(578, 578);
+            this.OutputText.TabIndex = 1;
             // 
             // saveFileDialog
             // 
             this.saveFileDialog.CreatePrompt = true;
-            this.saveFileDialog.DefaultExt = "s77";
+            this.saveFileDialog.DefaultExt = "as";
             this.saveFileDialog.FileName = "new";
-            this.saveFileDialog.Filter = "Compilator s77|*.s77";
+            this.saveFileDialog.Filter = "Program|*.as";
             this.saveFileDialog.RestoreDirectory = true;
             this.saveFileDialog.Title = "Зберегти файл програми";
             // 
             // openFileDialog
             // 
-            this.openFileDialog.DefaultExt = "s77";
-            this.openFileDialog.Filter = "Compilator s77|*.s77";
+            this.openFileDialog.DefaultExt = "as";
+            this.openFileDialog.Filter = "Program|*.as";
             this.openFileDialog.RestoreDirectory = true;
             this.openFileDialog.Title = "Відкрити файл програми";
             // 
@@ -195,8 +219,7 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.проектToolStripMenuItem,
-            this.опціїToolStripMenuItem});
+            this.проектToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
@@ -261,33 +284,6 @@
             this.RunToolStripMenuItem.Text = "Запустити програму";
             this.RunToolStripMenuItem.Click += new System.EventHandler(this.RunToolStripMenuItem_Click);
             // 
-            // опціїToolStripMenuItem
-            // 
-            this.опціїToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openCompiledFileToolStripMenuItem,
-            this.openReportProgramToolStripMenuItem});
-            this.опціїToolStripMenuItem.Name = "опціїToolStripMenuItem";
-            this.опціїToolStripMenuItem.Size = new System.Drawing.Size(71, 29);
-            this.опціїToolStripMenuItem.Text = "Опції";
-            // 
-            // openCompiledFileToolStripMenuItem
-            // 
-            this.openCompiledFileToolStripMenuItem.Checked = true;
-            this.openCompiledFileToolStripMenuItem.CheckOnClick = true;
-            this.openCompiledFileToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.openCompiledFileToolStripMenuItem.Name = "openCompiledFileToolStripMenuItem";
-            this.openCompiledFileToolStripMenuItem.Size = new System.Drawing.Size(387, 34);
-            this.openCompiledFileToolStripMenuItem.Text = "Відкривати скомпільований файл";
-            // 
-            // openReportProgramToolStripMenuItem
-            // 
-            this.openReportProgramToolStripMenuItem.Checked = true;
-            this.openReportProgramToolStripMenuItem.CheckOnClick = true;
-            this.openReportProgramToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.openReportProgramToolStripMenuItem.Name = "openReportProgramToolStripMenuItem";
-            this.openReportProgramToolStripMenuItem.Size = new System.Drawing.Size(387, 34);
-            this.openReportProgramToolStripMenuItem.Text = "Відкривати файл програми";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -308,6 +304,8 @@
             this.ReportTab.PerformLayout();
             this.ErrorTab.ResumeLayout(false);
             this.ErrorTab.PerformLayout();
+            this.OutputTab.ResumeLayout(false);
+            this.OutputTab.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -335,9 +333,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.TextBox ReportText;
         private System.Windows.Forms.TextBox ErrorText;
-        private System.Windows.Forms.ToolStripMenuItem опціїToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openCompiledFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openReportProgramToolStripMenuItem;
+        private System.Windows.Forms.TabPage OutputTab;
+        private System.Windows.Forms.TextBox OutputText;
     }
 }
 

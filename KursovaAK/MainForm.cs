@@ -12,6 +12,7 @@ using System.Threading;
 using System.Diagnostics;
 using System.Configuration;
 using System.Globalization;
+using Assembler;
 
 namespace KursovaAK
 {
@@ -21,18 +22,18 @@ namespace KursovaAK
         private string currFile;
         private string currWay;
         private string currName;
+        private ISol sol;
         public MainForm()
         {
             InitializeComponent();
             GetPosition();
-            //RichEdit1->Paragraph->FirstIndent = 5;
-            //RichEdit1->Paragraph->RightIndent = 4;
             openFileDialog.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
             saveFileDialog.InitialDirectory = Environment.SpecialFolder.MyDocuments.ToString();
             ifSave = false;
             currFile = string.Empty;
             Logger.InitLogger();
             RunToolStripMenuItem.Enabled = false;
+
         }
 
         private void GetPosition()
@@ -132,6 +133,7 @@ namespace KursovaAK
             ErrorText.Clear();
             try
             {
+                File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), string.Empty);
                 if (string.IsNullOrEmpty(currFile))
                 {
                     MessageBox.Show("Save file before compiling");
@@ -143,34 +145,92 @@ namespace KursovaAK
                 }
                 tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ReportTab");
                 // Отримання і формування мен ввхідних та вихідних файлів
-                //inFileName = currFile;
-                //outFileName = currWay + "\\" + currName + ".asm";
+                var inFileName = currFile;
+                var outFileName = currWay + "\\" + currName + ".mc";
                 ReportText.AppendText("Compiling the project begins...\r\n");
-                ReportText.AppendText("Input file of the project " + currName + ".l69.\r\n");
-                //using (fin = new StreamReader(inFileName))
-                //{
-                //    // Розбиття на лексеми і друк у файл
-                //    AnalisisTokens(fin);
-                //}
-                //nNumberErrors = ErrorChecking();
+                ReportText.AppendText("Input file of the project " + currName + ".as.\r\n");
                 ReportText.AppendText("Begins search for errors...\r\n");
+                bool isError = false;
+                try
+                {
+                    sol = new ASol();
+                    sol.Run(inFileName, outFileName);
+                }
+                catch (MessageException ex)
+                {
+                    isError = true;
+                    File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), ex.Message);
+                }
                 ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
-                // Якшо немає помилок, перейти до трансляції коду
-                //if (nNumberErrors != 0)
-                //{
-                //    ReportText.AppendText("Find " + nNumberErrors + " errors.\r\n");
-                //}
-                //else
+                if (!isError)
                 {
                     ReportText.AppendText("No errors found.\r\n");
-                    //using (fout = new StreamWriter(outFileName))
-                    //{
-                    //    ReportText.AppendText("ASM file " + currName + ".asm successfully created.\r\n");
-                    //    Generator.GenerateCode(fout);
-                    //}
                     ReportText.AppendText("Compiling the project completed.\r\n");
                     ReportText.AppendText("Now you can start the program to perform.\r\n");
                     RunToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
+                    ReportText.AppendText("See error tab.\r\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message + " " + ex.StackTrace);
+                tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
+                ErrorText.AppendText("See Error.log");
+                MessageBox.Show("Ой...щось пішло не так, глянь Error.log", "НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RunToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportText.Clear();
+            ErrorText.Clear();
+            OutputText.Clear();
+            try
+            {
+                File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), string.Empty);
+                if (string.IsNullOrEmpty(currFile))
+                {
+                    MessageBox.Show("Save file before compiling");
+                    return;
+                }
+                if (!ifSave)
+                {
+                    Save();
+                }
+                tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ReportTab");
+                // Отримання і формування мен ввхідних та вихідних файлів
+                var inFileName = Path.ChangeExtension(currFile, ".mc");
+                var outFileName = currWay + "\\" + currName + ".mc_report";
+                ReportText.AppendText("Running the project begins...\r\n");
+                ReportText.AppendText("Input file of the project " + currName + ".mc.\r\n");
+                ReportText.AppendText("Begins search for errors...\r\n");
+                bool isError = false;
+                try
+                {
+                    sol = new SSol();
+                    sol.Run(inFileName, outFileName);
+                }
+                catch (MessageException ex)
+                {
+                    isError = true;
+                    File.WriteAllText(ConfigurationManager.AppSettings.Get("ErrorsFile"), ex.Message);
+                }
+                ErrorText.AppendText(File.ReadAllText(ConfigurationManager.AppSettings.Get("ErrorsFile")));
+                if (!isError)
+                {
+                    tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("OutputTab");
+                    OutputText.AppendText(File.ReadAllText(outFileName));
+                    ReportText.AppendText("No errors found.\r\n");
+                    ReportText.AppendText("Finish running.");
+                }
+                else
+                {
+                    tabControl.SelectedIndex = tabControl.TabPages.IndexOfKey("ErrorTab");
+                    ReportText.AppendText("See error tab.\r\n");
                 }
             }
             catch (Exception ex)
@@ -180,20 +240,9 @@ namespace KursovaAK
             }
         }
 
-        private void RunToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error(ex.Message + " " + ex.StackTrace);
-                MessageBox.Show("Ой...щось пішло не так, глянь Error.log","НЛО", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void Code_TextChanged(object sender, EventArgs e)
         {
+            RunToolStripMenuItem.Enabled = false;
             ifSave = false;
         }
 

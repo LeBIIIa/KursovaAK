@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Assembler
 {
-    public interface Sol
+    public interface ISol
     {
-        void Run(string compilled, string report);
+        void Run(string compiled, string report);
     }
 }
