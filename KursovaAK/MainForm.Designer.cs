@@ -49,6 +49,7 @@
             this.проектToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CompileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl.SuspendLayout();
@@ -86,12 +87,12 @@
             this.tableLayoutPanel1.Controls.Add(this.Code, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tabControl, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 33);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 36);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 630);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 627);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // Code
@@ -104,7 +105,7 @@
             this.Code.Location = new System.Drawing.Point(4, 5);
             this.Code.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Code.Name = "Code";
-            this.Code.Size = new System.Drawing.Size(592, 620);
+            this.Code.Size = new System.Drawing.Size(592, 617);
             this.Code.TabIndex = 0;
             this.Code.Text = "";
             this.Code.TextChanged += new System.EventHandler(this.Code_TextChanged);
@@ -121,7 +122,7 @@
             this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(592, 620);
+            this.tabControl.Size = new System.Drawing.Size(592, 617);
             this.tabControl.TabIndex = 1;
             // 
             // ReportTab
@@ -180,7 +181,7 @@
             this.OutputTab.Location = new System.Drawing.Point(4, 29);
             this.OutputTab.Name = "OutputTab";
             this.OutputTab.Padding = new System.Windows.Forms.Padding(3);
-            this.OutputTab.Size = new System.Drawing.Size(584, 584);
+            this.OutputTab.Size = new System.Drawing.Size(584, 587);
             this.OutputTab.TabIndex = 3;
             this.OutputTab.Text = "Вивід";
             this.OutputTab.UseVisualStyleBackColor = true;
@@ -195,7 +196,7 @@
             this.OutputText.Name = "OutputText";
             this.OutputText.ReadOnly = true;
             this.OutputText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputText.Size = new System.Drawing.Size(578, 578);
+            this.OutputText.Size = new System.Drawing.Size(578, 581);
             this.OutputText.TabIndex = 1;
             // 
             // saveFileDialog
@@ -216,13 +217,15 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.проектToolStripMenuItem});
+            this.проектToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 36);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip";
             // 
@@ -284,6 +287,13 @@
             this.RunToolStripMenuItem.Text = "Запустити програму";
             this.RunToolStripMenuItem.Click += new System.EventHandler(this.RunToolStripMenuItem_Click);
             // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 29);
+            this.aboutToolStripMenuItem.Text = "Про автора";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -335,6 +345,7 @@
         private System.Windows.Forms.TextBox ErrorText;
         private System.Windows.Forms.TabPage OutputTab;
         private System.Windows.Forms.TextBox OutputText;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 
