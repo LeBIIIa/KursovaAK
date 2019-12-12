@@ -157,7 +157,7 @@
             this.ErrorTab.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ErrorTab.Name = "ErrorTab";
             this.ErrorTab.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.ErrorTab.Size = new System.Drawing.Size(584, 587);
+            this.ErrorTab.Size = new System.Drawing.Size(584, 584);
             this.ErrorTab.TabIndex = 2;
             this.ErrorTab.Text = "Список помилок";
             this.ErrorTab.UseVisualStyleBackColor = true;
@@ -172,7 +172,7 @@
             this.ErrorText.Name = "ErrorText";
             this.ErrorText.ReadOnly = true;
             this.ErrorText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ErrorText.Size = new System.Drawing.Size(576, 577);
+            this.ErrorText.Size = new System.Drawing.Size(576, 574);
             this.ErrorText.TabIndex = 0;
             // 
             // OutputTab
@@ -181,7 +181,7 @@
             this.OutputTab.Location = new System.Drawing.Point(4, 29);
             this.OutputTab.Name = "OutputTab";
             this.OutputTab.Padding = new System.Windows.Forms.Padding(3);
-            this.OutputTab.Size = new System.Drawing.Size(584, 587);
+            this.OutputTab.Size = new System.Drawing.Size(584, 584);
             this.OutputTab.TabIndex = 3;
             this.OutputTab.Text = "Вивід";
             this.OutputTab.UseVisualStyleBackColor = true;
@@ -196,7 +196,7 @@
             this.OutputText.Name = "OutputText";
             this.OutputText.ReadOnly = true;
             this.OutputText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.OutputText.Size = new System.Drawing.Size(578, 581);
+            this.OutputText.Size = new System.Drawing.Size(578, 578);
             this.OutputText.TabIndex = 1;
             // 
             // saveFileDialog
@@ -236,7 +236,7 @@
             this.SaveToolStripMenuItem,
             this.SaveAsToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(69, 30);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
             // openFileToolStripMenuItem
@@ -268,7 +268,7 @@
             this.CompileToolStripMenuItem,
             this.RunToolStripMenuItem});
             this.проектToolStripMenuItem.Name = "проектToolStripMenuItem";
-            this.проектToolStripMenuItem.Size = new System.Drawing.Size(88, 29);
+            this.проектToolStripMenuItem.Size = new System.Drawing.Size(88, 30);
             this.проектToolStripMenuItem.Text = "Проект";
             // 
             // CompileToolStripMenuItem
@@ -290,7 +290,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 29);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 30);
             this.aboutToolStripMenuItem.Text = "Про автора";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

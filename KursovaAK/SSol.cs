@@ -265,7 +265,7 @@ namespace Assembler
                             state.stack.Push(st0 ^ st1);
                         }
                     }
-                    else if (opcode == Command.BSR)
+                    else if (opcode == Command.BSF)
                     {
                         BitArray arr = new BitArray(new int[] { state.reg[arg0] });
                         int t = 0;
@@ -280,11 +280,11 @@ namespace Assembler
                         }
                         state.ZF = t;
                     }
-                    else if (opcode == Command.BSF)
+                    else if (opcode == Command.BSR)
                     {
                         BitArray arr = new BitArray(new int[] { state.reg[arg0] });
                         int t = 0;
-                        for (var i = arr.Count - 1; i >= 0; ++i)
+                        for (var i = arr.Count - 1; i >= 0; --i)
                         {
                             if (arr[i])
                             {
